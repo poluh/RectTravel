@@ -6,7 +6,6 @@ import java.util.List;
 public class SquarePhysics {
 
     private static final double accelerationOfGravity = 4.9;
-    private double speed;
     private int height;
 
     public SquarePhysics(int height) {
@@ -15,19 +14,26 @@ public class SquarePhysics {
 
     public List<Double> calculationOfJump() {
         var result = new ArrayList<Double>();
-        var maxTime = Math.sqrt((height << 1) / accelerationOfGravity) / 2;
-        speed = -(accelerationOfGravity * maxTime * maxTime * maxTime);
-        var time = 0.0;
-        while (time < maxTime) {
-            speed += accelerationOfGravity * time;
-            result.add(getHeightOfTime(time));
+        var maxTime = Math.sqrt((height << 1) / accelerationOfGravity);
+        var currentTime = 0.0;
 
-            time += 0.1;
+        var currentSpeed = -(accelerationOfGravity * maxTime * maxTime);
+        while (currentTime < maxTime) {
+            currentTime += 0.1;
+            currentSpeed += accelerationOfGravity * currentTime;
+
+            var height = getHeightOfTime(currentTime, currentSpeed);
+            if (height < 0) {
+                result.add(height);
+            } else {
+                result.add(0.0);
+                break;
+            }
         }
         return result;
     }
 
-    private double getHeightOfTime(double time) {
+    private double getHeightOfTime(double time, double speed) {
         return speed * time + (accelerationOfGravity * time * time) / 2;
     }
 }

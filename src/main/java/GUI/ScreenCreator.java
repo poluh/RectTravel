@@ -5,7 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import logic.physics.Animation;
+import logic.Animation.SquareAnimation;
 
 public class ScreenCreator extends Application {
     private static final int HEIGHT = 400;
@@ -24,8 +24,8 @@ public class ScreenCreator extends Application {
         root.getChildren().addAll(drawer.getBackgroundCanvas(), drawer.getRectangleCanvas());
 
         drawer.getRectangleCanvas().setOnMouseClicked(event -> {
-            Animation animation = new Animation(drawer.getRectangleCanvas());
-            animation.start();
+            SquareAnimation squareAnimation = new SquareAnimation(drawer.getRectangleCanvas());
+            squareAnimation.start();
         });
 
         primaryStage.setScene(scene);

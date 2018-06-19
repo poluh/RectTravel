@@ -5,18 +5,32 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 public class Drawer {
 
     private static final int RADIUS_RECT = 35;
     private Canvas backgroundCanvas;
     private Canvas rectangleCanvas;
-    private GraphicsContext backgroundContext;
-    private GraphicsContext rectangleContext;
+    private Canvas obstaclesCanvas;
+    private static GraphicsContext obstaclesContex;
+    private static GraphicsContext backgroundContext;
+    private static GraphicsContext rectangleContext;
 
     public void createGameField() {
         createBackground();
         createRectangle();
         shiftGameSpace(0);
+    }
+
+    public void createObstacles() {
+        var height = new Random().nextInt(RADIUS_RECT) + RADIUS_RECT;
+        var width = new Random().nextInt(10) + 10;
+
+        obstaclesCanvas = new Canvas(width, height);
+        obstaclesContex = obstaclesCanvas.getGraphicsContext2D();
+        obstaclesContex.setFill(Color.FIREBRICK);
+        obstaclesContex.fillRect(0, 0, width, height);
     }
 
     private void createBackground() {
@@ -46,16 +60,16 @@ public class Drawer {
         createGameSpace((ScreenCreator.getHEIGHT() >> 1) + RADIUS_RECT + shift);
     }
 
-    public void rotateRectangle(double angle) {
-        rectangleContext.getCanvas().setRotate(angle);
-    }
-
     public Canvas getBackgroundCanvas() {
         return backgroundCanvas;
     }
 
     public Canvas getRectangleCanvas() {
         return rectangleCanvas;
+    }
+
+    public Canvas getObstaclesCanvas() {
+        return obstaclesCanvas;
     }
 
     private static void clearLayer(GraphicsContext context) {
