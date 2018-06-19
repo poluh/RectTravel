@@ -4,8 +4,8 @@ import GUI.drawing.Drawer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import logic.physics.Animation;
 
 public class ScreenCreator extends Application {
     private static final int HEIGHT = 400;
@@ -22,6 +22,11 @@ public class ScreenCreator extends Application {
         drawer.createGameField();
 
         root.getChildren().addAll(drawer.getBackgroundCanvas(), drawer.getRectangleCanvas());
+
+        drawer.getRectangleCanvas().setOnMouseClicked(event -> {
+            Animation animation = new Animation(drawer.getRectangleCanvas());
+            animation.start();
+        });
 
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -11,7 +11,7 @@ public class Drawer {
     private Canvas backgroundCanvas;
     private Canvas rectangleCanvas;
     private GraphicsContext backgroundContext;
-    private GraphicsContext rectangleContecxt;
+    private GraphicsContext rectangleContext;
 
     public void createGameField() {
         createBackground();
@@ -27,7 +27,7 @@ public class Drawer {
     }
 
     private void createGameSpace(int layoutY) {
-        backgroundContext.setFill(Color.RED);
+        backgroundContext.setFill(Color.FIREBRICK);
         backgroundContext.fillRect(0, layoutY, ScreenCreator.getWIDTH(), ScreenCreator.getHEIGHT());
     }
 
@@ -35,9 +35,9 @@ public class Drawer {
         rectangleCanvas = new Canvas(RADIUS_RECT << 1, RADIUS_RECT << 1);
         rectangleCanvas.setLayoutY((ScreenCreator.getHEIGHT() >> 1) - RADIUS_RECT);
         rectangleCanvas.setLayoutX((ScreenCreator.getWIDTH() >> 1) - RADIUS_RECT);
-        rectangleContecxt = rectangleCanvas.getGraphicsContext2D();
-        rectangleContecxt.setFill(Color.RED);
-        rectangleContecxt.fillRect(0, 0, RADIUS_RECT << 1, RADIUS_RECT << 1);
+        rectangleContext = rectangleCanvas.getGraphicsContext2D();
+        rectangleContext.setFill(Color.RED);
+        rectangleContext.fillRect(0, 0, RADIUS_RECT << 1, RADIUS_RECT << 1);
     }
 
     public void shiftGameSpace(int shift) {
@@ -47,7 +47,7 @@ public class Drawer {
     }
 
     public void rotateRectangle(double angle) {
-        rectangleContecxt.getCanvas().setRotate(angle);
+        rectangleContext.getCanvas().setRotate(angle);
     }
 
     public Canvas getBackgroundCanvas() {
@@ -60,5 +60,9 @@ public class Drawer {
 
     private static void clearLayer(GraphicsContext context) {
         context.clearRect(0, 0, context.getCanvas().getWidth(), context.getCanvas().getHeight());
+    }
+
+    public static int getRadiusRect() {
+        return RADIUS_RECT;
     }
 }
