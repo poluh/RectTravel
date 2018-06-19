@@ -21,9 +21,29 @@ public class ScreenCreator extends Application {
 
         Drawer drawer = new Drawer(canvas);
         drawer.fillBackground();
-        drawer.fillRectangle(10);
+        drawer.fillRectangle();
+
+        canvas.setOnMouseClicked(event -> jump(drawer));
 
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    private void jump(Drawer drawer) {
+        (new Thread(() -> {
+            var angle = 0.0;
+            var slowing = 2;
+            while (angle < 90 * 6) {
+                try {
+                    sleep(slowing);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                var finalAngle = angle;
+                Platform.runLater(() -> drawer.jump(finalAngle));
+                angle += 1.5;
+            }
+        })).start();
+    }
+
 }
