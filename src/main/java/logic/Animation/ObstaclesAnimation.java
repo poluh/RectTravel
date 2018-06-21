@@ -2,6 +2,7 @@ package logic.Animation;
 
 import GUI.drawing.Drawer;
 import javafx.scene.canvas.Canvas;
+import logic.GameProcessor;
 
 public class ObstaclesAnimation implements Animation {
 
@@ -9,8 +10,7 @@ public class ObstaclesAnimation implements Animation {
     private Drawer drawer;
 
     public ObstaclesAnimation(Drawer drawer) {
-        drawer.createObstacles();
-        this.canvas = canvas;
+        this.canvas = drawer.getObstaclesCanvas();
         this.drawer = drawer;
     }
 
@@ -20,10 +20,16 @@ public class ObstaclesAnimation implements Animation {
         (new Thread(() -> {
             var startValue = canvas.getLayoutX();
             var endValue = 0 - canvas.getWidth();
-            while (startValue >= endValue) {
+            while (GameProcessor.isGameRunning()) {
                 delay(10);
                 canvas.setLayoutX(startValue);
                 startValue--;
+                if (startValue <= endValue) {
+                    drawer.createObstacles();
+                    canvas = drawer.getObstaclesCanvas();
+                    startValue = canvas.getLayoutX();
+                    endValue = 0 - canvas.getWidth();
+                }
             }
         })).start();
     }

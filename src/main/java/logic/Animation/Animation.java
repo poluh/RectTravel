@@ -2,7 +2,7 @@ package logic.Animation;
 
 public interface Animation {
 
-    public void start();
+    void start();
 
     default void delay(int delay) {
         try {

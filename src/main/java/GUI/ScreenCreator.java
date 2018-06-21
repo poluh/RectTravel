@@ -5,7 +5,9 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.Animation.ObstaclesAnimation;
 import logic.Animation.SquareAnimation;
+import logic.GameProcessor;
 
 public class ScreenCreator extends Application {
     private static final int HEIGHT = 400;
@@ -20,6 +22,10 @@ public class ScreenCreator extends Application {
 
         Drawer drawer = new Drawer();
         drawer.createGameField();
+
+        GameProcessor gameProcessor = new GameProcessor(drawer);
+        ObstaclesAnimation obstaclesAnimation = new ObstaclesAnimation(drawer);
+        obstaclesAnimation.start();
 
         root.getChildren().addAll(drawer.getBackgroundCanvas(), drawer.getRectangleCanvas());
 
